@@ -1,0 +1,88 @@
+SONNET 5 + enterprise-coding SKILL EXAMPLE
+
+Amaç:
+Spring Boot OAuth2 Authorization Server uygulamasını plan-mode ile tek seferde, deterministik ve token-optimum şekilde üretmek.
+
+Kullanım:
+1) Bu repository’deki `SKILL.md` içeriğini aktif et.
+2) Aşağıdaki PLAN prompt’unu Sonnet 5’e ver.
+3) Plan Gate PASS olmadan implementasyona geçme.
+4) Plan kilitlendikten sonra EXECUTE prompt’unu tek seferde çalıştır.
+
+------------------------------------------------------------
+PLAN PROMPT (Sonnet 5)
+------------------------------------------------------------
+You are implementing a Spring Boot OAuth2 Authorization Server.
+Use enterprise-coding workflow and produce only a locked execution plan.
+
+Hard priorities:
+1) Accuracy
+2) Determinism
+3) Security
+4) Token efficiency
+5) Speed
+
+Output format (fixed order):
+1. Scope
+2. Assumptions
+3. Dependencies
+4. Risks
+5. Verification strategy
+6. Delivery criteria
+7. File plan (create/modify)
+8. Plan Gate status (PASS/FAIL)
+9. Open questions (if any)
+
+Requirements:
+- Stack: Java 21, Spring Boot 3.x, Spring Authorization Server, Spring Security.
+- Features:
+  - OAuth2 Authorization Server endpoints
+  - Registered clients (in-memory first)
+  - JWK source and RSA key pair
+  - JWT issuing configuration
+  - Basic user authentication source
+  - OpenID Connect enabled
+  - Health endpoint and minimal README run steps
+- Include test/build verification path.
+- If any required fact is missing, ask only minimal clarifying questions and set Plan Gate to FAIL.
+- Do not implement code in this step.
+
+------------------------------------------------------------
+EXECUTE PROMPT (Sonnet 5)
+------------------------------------------------------------
+Implement exactly the locked plan above with minimal scope.
+
+Rules:
+- Single action path, no alternatives.
+- Keep output concise.
+- Do not expand scope beyond the approved file plan.
+- If a new blocker appears, stop and report BLOCKED with evidence.
+- After implementation, run Verify Gate:
+  - Structural verification
+  - Architectural verification
+  - Behavior verification
+  - Test/build evidence
+  - Diff reconciliation
+- If any mandatory gate fails: COMPLETION = NOT VERIFIED.
+
+------------------------------------------------------------
+OPUS 5 ESCALATION CONDITIONS
+------------------------------------------------------------
+Escalate from Sonnet 5 to Opus 5 only if one of these occurs:
+- Cross-module architecture ambiguity
+- High-risk refactor with unclear blast radius
+- Contradictory requirements unresolved by repository evidence
+- Security-critical design tradeoff requiring deep reasoning
+
+Otherwise stay on Sonnet 5.
+
+------------------------------------------------------------
+MINIMUM ACCEPTANCE CHECKLIST
+------------------------------------------------------------
+[ ] Plan Gate = PASS
+[ ] OAuth2 auth server config exists and loads
+[ ] OIDC enabled
+[ ] Client registration works (in-memory baseline)
+[ ] JWT signing/JWK configuration present
+[ ] Build/test commands executed and reported
+[ ] Verify Gate = PASS

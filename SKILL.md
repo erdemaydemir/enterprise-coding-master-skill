@@ -856,13 +856,238 @@ When under time/token pressure, preserve this order:
 INSPECT
 → DELEGATE ARCHITECTURE
 → GUARD
+→ PLAN
+→ PLAN GATE
 → MINIMAL CHANGE
 → RE-READ
 → VERIFY
 → TEST
+→ VERIFY GATE
 → DIFF
 → RECONCILE
 → REPORT
 ```
 
 Do not optimize by removing verification. Optimize by reducing unnecessary implementation and narration.
+
+---
+
+# 24. Priority order and success metrics
+
+For plan-mode execution and one-shot delivery, use this fixed priority order:
+
+```text
+1) Accuracy
+2) Determinism
+3) Security
+4) Token efficiency
+5) Speed
+```
+
+Do not trade a higher priority for a lower one.
+
+Track these measurable metrics:
+
+- Task completion accuracy (request-contract match rate).
+- Reproducible output ratio (same input → same structure/decision path).
+- Average token usage per completed task.
+- Error / rework ratio (failed verification or user-requested rollback/rewrite).
+
+---
+
+# 25. Dual model operating profiles
+
+Use two explicit profiles.
+
+## Profile A — Sonnet 5 (default)
+
+Use by default for implementation and verification.
+
+Required behavior:
+- concise responses,
+- strict output format,
+- low-variance decisions,
+- minimal token overhead.
+
+## Profile B — Opus 5 (escalation)
+
+Use only when at least one condition holds:
+- multi-module or cross-boundary architecture ambiguity,
+- high-risk refactor with unclear blast radius,
+- contradictory requirements that cannot be resolved with local evidence,
+- complex reasoning where failure cost is high.
+
+After escalation, keep reporting/output constraints identical.
+
+---
+
+# 26. Plan Mode contract (lock-before-execute)
+
+When using plan mode, planning is a formal contract stage.
+
+## Mandatory plan structure
+
+```text
+Scope
+Assumptions
+Dependencies
+Risks
+Verification strategy
+Delivery criteria
+```
+
+## Lock rule
+
+Execution starts only after the plan is complete, internally consistent, and explicitly locked.
+
+If a required fact is missing:
+- do not guess;
+- ask a clarifying question;
+- keep status as `BLOCKED` until resolved.
+
+---
+
+# 27. Deterministic output policy
+
+For implementation tasks, produce one deterministic path.
+
+Required:
+- single final recommendation,
+- single action path,
+- fixed section ordering in responses,
+- consistent terminology across stages.
+
+Avoid:
+- multiple equivalent alternatives unless explicitly requested,
+- stylistic/creative expansions that do not change correctness.
+
+Conflict resolution must follow the fixed priority order from section 24.
+
+---
+
+# 28. Token optimization policy
+
+Default response mode is compact.
+
+Required:
+- avoid restating unchanged context,
+- avoid duplicate explanations,
+- avoid broad historical summaries unless required for verification.
+
+Expanded output is allowed only when:
+- complexity is high,
+- risk is high,
+- user explicitly requests detail.
+
+Token savings must never reduce verification rigor.
+
+---
+
+# 29. One-shot safety gates
+
+## 29.1 Plan Gate (before execution)
+
+Do not start implementation unless all pass:
+
+```text
+[ ] Scope complete
+[ ] Assumptions explicit
+[ ] Dependencies identified
+[ ] Open questions resolved
+[ ] Validation path defined
+[ ] Delivery criteria testable
+```
+
+If any item fails:
+
+```text
+PLAN GATE = FAIL
+```
+
+Execution must not begin.
+
+## 29.2 Verify Gate (after execution)
+
+Do not report completion unless all applicable checks pass:
+
+```text
+[ ] Structural verification
+[ ] Architectural verification
+[ ] Behavior verification (or explicit NOT RUN with reason)
+[ ] Test/build evidence
+[ ] Diff reconciliation
+```
+
+If a required check is missing or failed:
+
+```text
+VERIFY GATE = FAIL
+COMPLETION = NOT VERIFIED
+```
+
+---
+
+# 30. Plan templates by task type
+
+Use the smallest template that matches the request.
+
+## 30.1 Refactor plan
+
+Must include:
+- behavior preservation target,
+- impact surface,
+- rollback approach,
+- verification evidence for unchanged behavior.
+
+## 30.2 New feature plan
+
+Must include:
+- feature contract,
+- integration points,
+- test scope,
+- acceptance criteria.
+
+## 30.3 Skeleton feature plan
+
+Must include:
+- structural deliverables,
+- explicit non-goals,
+- minimum acceptance criteria.
+
+---
+
+# 31. 10/10 scoring rubric
+
+Score each dimension on 0–10:
+
+1. Accuracy
+2. Determinism
+3. Token efficiency
+4. Security/robustness
+5. Operability
+
+A run cannot be considered 10/10 unless all dimensions are high and no red-line condition is hit.
+
+Red-line fail examples:
+- unverifiable completion claim,
+- skipped mandatory gate,
+- contradictory output path,
+- security-critical oversight in changed scope.
+
+Use representative recurring task sets to calibrate scoring over time.
+
+---
+
+# 32. Continuous improvement loop
+
+After each failed or low-score run, classify root cause:
+
+- requirement misunderstanding,
+- scope expansion,
+- missing/weak verification,
+- token overrun,
+- architecture misplacement.
+
+Update instructions only from verified root causes.
+
+Revisit Sonnet/Opus escalation thresholds periodically using observed outcomes.
